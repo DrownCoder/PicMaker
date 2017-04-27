@@ -1,6 +1,5 @@
 package com.dzx.picmaker.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.media.MediaScannerConnection;
@@ -8,13 +7,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.util.Log;
-import android.view.View;
-import android.webkit.MimeTypeMap;
 
 import com.dzx.picmaker.R;
 import com.dzx.picmaker.activity.base.BaseActivity;
@@ -22,13 +16,11 @@ import com.dzx.picmaker.adapter.PhotoAdapter;
 import com.dzx.picmaker.databinding.ActivityPhotoBinding;
 import com.dzx.picmaker.model.Album;
 import com.dzx.picmaker.model.PhotoItem;
-import com.dzx.picmaker.util.FileUtils;
 import com.dzx.picmaker.util.ImageUtils;
 import com.dzx.picmaker.util.MediaScanner;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -82,6 +74,8 @@ public class PhotoActivity extends BaseActivity {
      */
     private void updataMedia() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            MediaScanner scanner = new MediaScanner(this);
+            //scanner.scanFile(new File(Environment.getExternalStorageDirectory()+"/sina/weibo/weibo/"),"jpg");
             scanSdCard();
         } else {
             sendBroadcast(new Intent(
@@ -91,7 +85,7 @@ public class PhotoActivity extends BaseActivity {
         }
     }
     private void scanSdCard(){
-        String file= Environment.getExternalStorageDirectory()+"/sina/weibo/weibo/";
+        String file= Environment.getExternalStorageDirectory().toString();
         folderScan(file);
     }
 
@@ -100,17 +94,8 @@ public class PhotoActivity extends BaseActivity {
         MediaScannerConnection.scanFile(this, new String[]{file}, null, new MediaScannerConnection.OnScanCompletedListener() {
             @Override
             public void onScanCompleted(String path, Uri uri) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAlbums = ImageUtils.getLocalAllAlbum(PhotoActivity.this);
-                        mPhotos.clear();
-                        for (String key : mAlbums.keySet()) {
-                            mPhotos.addAll(mAlbums.get(key).getPhotos());
-                        }
-                        mAdapter.notifyDataSetChanged();
-                    }
-                });
+                mPhotos.add(new PhotoItem(path));
+                mAdapter.notifyDataSetChanged();
             }
         });
     }
