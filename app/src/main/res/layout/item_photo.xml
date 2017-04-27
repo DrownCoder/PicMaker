@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_200px"
+    android:padding="2dp"
+    >
+    <ImageView
+        android:id="@+id/iv_item_photo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_200px"
+        android:scaleType="centerCrop"
+        />
+    <View
+        android:id="@+id/view_shade"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/clickdark"
+        android:alpha="0.4"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/tv_num"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_margin="3dp"
+        android:layout_gravity="right|top"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@drawable/circle_hollow_white"
+        />
+</FrameLayout>

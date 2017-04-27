@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.dzx.picmaker.widget.CommonTitleBar
+            android:id="@+id/common_title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:rightBtnTxt="下一步"
+            app:titleTxt="全部图片" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcy_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/height_100px" />
+    </RelativeLayout>
+</layout>
