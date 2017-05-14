@@ -10,6 +10,24 @@ import android.support.annotation.NonNull;
 public class PhotoItem implements Comparable<PhotoItem> {
     private String imgUri;
     private long date;
+    private boolean isSelected;
+    private int selectNum;
+
+    public int getSelectNum() {
+        return selectNum;
+    }
+
+    public void setSelectNum(int selectNum) {
+        this.selectNum = selectNum;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public PhotoItem(String imgUri, long date) {
         this.imgUri = imgUri;

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
@@ -32,6 +33,7 @@ public class PhotoActivity extends BaseActivity {
     private PhotoAdapter mAdapter;
     private Map<String, Album> mAlbums;
     private List<PhotoItem> mPhotos;
+    private List<PhotoItem> mSelectPhotos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,23 +52,13 @@ public class PhotoActivity extends BaseActivity {
         updataMedia();
         mAlbums = ImageUtils.getLocalAllAlbum(PhotoActivity.this);
         mPhotos = new ArrayList<>();
+        mSelectPhotos = new ArrayList<>();
         for (String key : mAlbums.keySet()) {
             mPhotos.addAll(mAlbums.get(key).getPhotos());
         }
-        mAdapter = new PhotoAdapter(this, mPhotos);
+        mAdapter = new PhotoAdapter(this, mPhotos , mSelectPhotos);
         mBinding.rcyPhoto.setLayoutManager(new GridLayoutManager(this, 4));
         mBinding.rcyPhoto.setAdapter(mAdapter);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mAlbums = ImageUtils.getLocalAllAlbum(PhotoActivity.this);
-                mPhotos.clear();
-                for (String key : mAlbums.keySet()) {
-                    mPhotos.addAll(mAlbums.get(key).getPhotos());
-                }
-                mAdapter.notifyDataSetChanged();
-            }
-        },3000);
     }
 
     /**
@@ -86,7 +78,7 @@ public class PhotoActivity extends BaseActivity {
     }
     private void scanSdCard(){
         String file= Environment.getExternalStorageDirectory().toString();
-        folderScan(file);
+        new ScanTask().execute(file);
     }
 
     private void fileScan(String file){
@@ -95,12 +87,17 @@ public class PhotoActivity extends BaseActivity {
             @Override
             public void onScanCompleted(String path, Uri uri) {
                 mPhotos.add(new PhotoItem(path));
-                mAdapter.notifyDataSetChanged();
             }
         });
     }
 
-    private void folderScan(String path){
+    /**
+     * 目录检索
+     * @param path
+     * @return
+     */
+    private int folderScan(String path){
+        int size = 0;
         File file = new File(path);
 
         if(file.exists() && file.isDirectory()){
@@ -112,7 +109,8 @@ public class PhotoActivity extends BaseActivity {
                 if(f.isFile()){//FILE TYPE
                     String name = f.getName();
 
-                    if(name.endsWith(".mp4") || name.endsWith(".mp3") || name.endsWith(".jpg")){
+                    if(name.endsWith(".png") || name.endsWith(".gif") || name.endsWith(".jpg")){
+                        size++;
                         fileScan(f.getAbsolutePath());
                     }
                 }
@@ -121,5 +119,26 @@ public class PhotoActivity extends BaseActivity {
                 }
             }
         }
+        return size;
     }
+
+    private class ScanTask extends AsyncTask<String,Integer,Integer> {
+        @Override
+        protected void onPreExecute() {
+            showProgressDialog(PhotoActivity.this,"扫描图片中……");
+        }
+
+        @Override
+        protected Integer doInBackground(String... strings) {
+            String path = strings[0];
+            return folderScan(path);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            dismissProgressDialog();
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
 }

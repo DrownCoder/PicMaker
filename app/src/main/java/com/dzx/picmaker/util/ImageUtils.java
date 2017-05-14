@@ -3,6 +3,7 @@ package com.dzx.picmaker.util;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.dzx.picmaker.model.Album;
 import com.dzx.picmaker.model.PhotoItem;
@@ -57,6 +58,7 @@ public class ImageUtils {
             } else {
                 galleries.remove(FileUtils.getInst().getSystemPhotoPath());
             }
+            Log.e("PATH", FileUtils.getInst().getSystemPhotoPath());
         }
         return galleries;
     }

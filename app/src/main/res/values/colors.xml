@@ -6,4 +6,9 @@
     <color name="pink">#ff5d65</color>
     <color name="white">#ffffff</color><!--白色 -->
     <color name="clickdark">#8565686A</color><!--点击变灰-->
+    <color name="contentwhite">#F5F5F5</color><!--背景内容白-->
+    <color name="black">#000000</color>
+    <color name="dialogblue">#38ADFF</color><!--dialog内容蓝-->
+    <color name="textblack">#3D3D3D</color><!--主要文字黑-->
+    <color name="textblacklight">#8A8A8A</color><!--灰白文字-->
 </resources>

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PicMaker.iml" filepath="$PROJECT_DIR$/PicMaker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/PicMaker.iml" filepath="$PROJECT_DIR$/.idea/PicMaker.iml" />
+      <module fileurl="file://D:\Study\Android\Projects\PicMaker\PicMaker.iml" filepath="D:\Study\Android\Projects\PicMaker\PicMaker.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="item_popup_size">16sp</dimen>
-
+    <dimen name="tv_littlesize">16sp</dimen>
     <!-- 各种高度 -->
     <dimen name="height_625px">313dp</dimen>
     <dimen name="height_414px">207dp</dimen>
